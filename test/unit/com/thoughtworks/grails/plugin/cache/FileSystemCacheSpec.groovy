@@ -27,7 +27,7 @@ class FileSystemCacheSpec extends Specification {
             assert nativeCache instanceof File
             assert nativeCache.exists()
             assert "value" == cache.get("entry").get()
-            assert cacheEntryExists(CACHE_NAME,"567df20cb464db32e1e20d59160191f56e810a49c149701c37fdeffd931252c8.ser")
+            assert cacheEntryExists(CACHE_NAME,"567df20cb464db32e1e20d59160191f56e810a49c149701c37fdeffd931252c8.json")
         cleanup:
             cache.clear()
     }
@@ -121,7 +121,7 @@ class FileSystemCacheSpec extends Specification {
             assert "800-555-1212" == cache.get("person").get().phone
             assert "steven" == cache.get("person",CacheableSerializableTestClass).name
             assert "800-555-1212" == cache.get("person",CacheableSerializableTestClass).phone
-            assert cacheEntryExists(CACHE_NAME, "7e9c952e13b00bdae58213d728390edcdbebf7d3d05c6ffd1092b2f715aef911.ser")
+            assert cacheEntryExists(CACHE_NAME, "7e9c952e13b00bdae58213d728390edcdbebf7d3d05c6ffd1092b2f715aef911.json")
         cleanup:
             cache.clear()
     }
@@ -145,7 +145,7 @@ class FileSystemCacheSpec extends Specification {
             assert "steven" == item.name
             assert "800-555-1212" == item.phone
             assert ["red","blue","green"] == item.favoriteColors
-            assert cacheEntryExists(CACHE_NAME,"badda42d974df0743ec512bfb826181ca2492995ade72625d471b6bd2b5c313e.ser")
+            assert cacheEntryExists(CACHE_NAME,"badda42d974df0743ec512bfb826181ca2492995ade72625d471b6bd2b5c313e.json")
         cleanup:
             cache.clear()
     }
@@ -164,7 +164,7 @@ class FileSystemCacheSpec extends Specification {
             assert "800-555-1212" == cache.get("person").get().phone
             assert "steven" == cache.get("person",CacheableSerializableTestClass).name
             assert "800-555-1212" == cache.get("person",CacheableSerializableTestClass).phone
-            assert cacheEntryExists(CACHE_NAME, "7e9c952e13b00bdae58213d728390edcdbebf7d3d05c6ffd1092b2f715aef911.ser")
+            assert cacheEntryExists(CACHE_NAME, "7e9c952e13b00bdae58213d728390edcdbebf7d3d05c6ffd1092b2f715aef911.json")
          cleanup:
             cache.clear()
     }
