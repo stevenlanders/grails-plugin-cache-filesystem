@@ -1,9 +1,7 @@
 package com.thoughtworks.grails.plugin.cache
 
 import grails.converters.JSON
-import groovy.json.JsonSlurper
 import spock.lang.Specification
-
 
 /**
  * Created by stevenlanders on 9/3/14.
