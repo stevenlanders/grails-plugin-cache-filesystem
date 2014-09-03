@@ -1,12 +1,9 @@
 package com.thoughtworks.grails.plugin.cache
 
-import grails.plugin.cache.SerializableByteArrayOutputStream
 import groovy.json.JsonOutput
 import org.apache.commons.lang.SerializationUtils
-import org.codehaus.groovy.grails.plugins.codecs.SHA256Codec
 import org.springframework.cache.Cache
 import org.springframework.cache.support.SimpleValueWrapper
-
 
 import java.security.MessageDigest
 
@@ -112,10 +109,6 @@ class FileSystemCache implements Cache{
     void clear() {
         checkStatus()
         new File("${directory}/${name}").deleteDir()
-    }
-
-    private static Serializable wrap(Object o){
-        return new SerialObjectWrapper(object:o)
     }
 
     private def checkStatus(){

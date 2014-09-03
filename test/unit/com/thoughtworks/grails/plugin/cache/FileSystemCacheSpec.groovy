@@ -19,9 +19,12 @@ class FileSystemCacheSpec extends Specification {
             )
         when:
             cache.put("entry", "value")
+            def nativeCache = cache.getNativeCache()
         then:
+            assert CACHE_NAME == cache.getName()
+            assert nativeCache instanceof File
+            assert nativeCache.exists()
             assert "value" == cache.get("entry").get()
-            println("${TEMP_DIR}")
             assert cacheEntryExists(CACHE_NAME,"567df20cb464db32e1e20d59160191f56e810a49c149701c37fdeffd931252c8.ser")
         cleanup:
             cache.clear()
