@@ -32,4 +32,4 @@ grails.cache.config = {
 }
 ```
 
-If desired, one can choose to not specify a cache config, and just use @Cachable("cachename").  In this case, default temp directory is used.
+If desired, one can choose to not specify a cache config, and just use `@Cachable("cachename")`.  In this case, default temp directory is used.
