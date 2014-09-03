@@ -5,7 +5,7 @@ Filesystem implementation of the Grails cache plugin
 
 This is for very simple caching scenarios where the filesystem is a reasonable place to cache results.  To clear the cache, delete the desired directory.
 
-By default, cache files are created in Java's System.getProperty("java.io.tmpdir") location  (where File.createTempFile creates its files)
+By default, cache files are created in Java's `-Djava.io.tmpdir` location  (where File.createTempFile creates its files)
 
 ### Example (optional) configurations:
 
