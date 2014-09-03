@@ -5,7 +5,6 @@ import groovy.json.JsonOutput
 import groovy.json.JsonSlurper
 import org.apache.commons.lang.SerializationUtils
 import org.springframework.cache.Cache
-import org.springframework.cache.support.SimpleValueWrapper
 
 import java.security.MessageDigest
 
@@ -23,8 +22,6 @@ class FileSystemCache implements Cache{
             new File("${directory}/${name}/").mkdirs()
             def file = getFileByKey(key)
             file.write(JsonOutput.toJson(o))
-        }catch(NotSerializableException nse){
-            throw new RuntimeException("Cacheable objects must implement Serializable", nse)
         }catch(e){
             throw new RuntimeException(e)
         }
@@ -45,7 +42,7 @@ class FileSystemCache implements Cache{
 
     File getFileByKey(Object key){
         def filename = toFileName(key)
-        def file = new File("${directory}/${name}/${filename}.ser")
+        def file = new File("${directory}/${name}/${filename}.json")
         return file;
     }
 
@@ -114,8 +111,4 @@ class FileSystemCache implements Cache{
         }
     }
 
-    private static class SerialObjectWrapper implements Serializable{
-        Object object
-
-    }
 }

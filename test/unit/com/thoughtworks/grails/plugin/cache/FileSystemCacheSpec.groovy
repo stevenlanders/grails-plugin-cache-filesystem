@@ -46,6 +46,18 @@ class FileSystemCacheSpec extends Specification {
 
     }
 
+    void "test null cache"(){
+        given:
+        FileSystemCache cache = new FileSystemCache(
+                name: CACHE_NAME,
+                directory: TEMP_DIR
+        )
+        when:
+        cache.put("nullobj", null)
+        then:
+        assert null == cache.get("nullobj")
+    }
+
     void "test complicated key string cache"(){
         given:
         FileSystemCache cache = new FileSystemCache(
