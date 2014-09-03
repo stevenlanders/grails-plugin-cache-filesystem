@@ -1,5 +1,7 @@
 package com.thoughtworks.grails.plugin.cache
 
+import grails.converters.JSON
+import groovy.json.JsonSlurper
 import spock.lang.Specification
 
 
@@ -28,6 +30,20 @@ class FileSystemCacheSpec extends Specification {
             assert cacheEntryExists(CACHE_NAME,"567df20cb464db32e1e20d59160191f56e810a49c149701c37fdeffd931252c8.ser")
         cleanup:
             cache.clear()
+    }
+
+    void "test json cache"(){
+        given:
+            def jsonObj = JSON.parse('[{"val 1":"20.000000"}]')
+            FileSystemCache cache = new FileSystemCache(
+                    name: CACHE_NAME,
+                    directory: TEMP_DIR
+            )
+        when:
+            cache.put("json", jsonObj)
+        then:
+            assert jsonObj == cache.get("json").get()
+
     }
 
     void "test complicated key string cache"(){
@@ -128,11 +144,16 @@ class FileSystemCacheSpec extends Specification {
                     name: CACHE_NAME,
                     directory: TEMP_DIR
             )
+            println(TEMP_DIR)
         when:
             cache.put("person", new CacheableTestClass(name:"steven",phone:"800-555-1212"))
         then:
-            thrown RuntimeException
-        cleanup:
+            assert "steven" == cache.get("person").get().name
+            assert "800-555-1212" == cache.get("person").get().phone
+            assert "steven" == cache.get("person",CacheableSerializableTestClass).name
+            assert "800-555-1212" == cache.get("person",CacheableSerializableTestClass).phone
+            assert cacheEntryExists(CACHE_NAME, "7e9c952e13b00bdae58213d728390edcdbebf7d3d05c6ffd1092b2f715aef911.ser")
+         cleanup:
             cache.clear()
     }
 

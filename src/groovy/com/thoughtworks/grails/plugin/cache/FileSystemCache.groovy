@@ -1,6 +1,8 @@
 package com.thoughtworks.grails.plugin.cache
 
+import grails.plugin.cache.GrailsValueWrapper
 import groovy.json.JsonOutput
+import groovy.json.JsonSlurper
 import org.apache.commons.lang.SerializationUtils
 import org.springframework.cache.Cache
 import org.springframework.cache.support.SimpleValueWrapper
@@ -17,34 +19,26 @@ class FileSystemCache implements Cache{
 
     void writeObject(Object key, Object o){
         checkStatus()
-        def os = null
         try {
             new File("${directory}/${name}/").mkdirs()
             def file = getFileByKey(key)
-            os = file.newObjectOutputStream()
-            os << o
+            file.write(JsonOutput.toJson(o))
         }catch(NotSerializableException nse){
             throw new RuntimeException("Cacheable objects must implement Serializable", nse)
         }catch(e){
             throw new RuntimeException(e)
-        }finally{
-            os?.close()
         }
     }
 
     Object readObject(Object key){
         checkStatus()
-        def os = null
         try{
             def file = getFileByKey(key)
             if(file.exists()){
-                os = file.newObjectInputStream()
-                return os.readObject()
+                return new JsonSlurper().parse(file)
             }
         }catch(e){
             throw new RuntimeException(e)
-        }finally{
-            os?.close()
         }
         return null
     }
@@ -84,7 +78,7 @@ class FileSystemCache implements Cache{
     @Override
     Cache.ValueWrapper get(Object key) {
         Object o = readObject(key)
-        return (o == null) ? null : new SimpleValueWrapper(o)
+        return (o == null) ? null : new GrailsValueWrapper(o, null)
     }
 
     @Override
