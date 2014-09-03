@@ -20,7 +20,7 @@ class FileSystemCacheManager implements GrailsCacheManager {
 
     @Override
     boolean cacheExists(String name) {
-        return cacheMap.containsKey(name)
+        return name == null ? false : cacheMap.containsKey(name)
     }
 
     @Override
