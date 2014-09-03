@@ -9,7 +9,7 @@ By default, cache files are created in Java's System.getProperty("java.io.tmpdir
 
 ### Example (optional) configurations:
 
-```java
+```groovy
 //basic config
 grails.cache.config = {
     cache {
