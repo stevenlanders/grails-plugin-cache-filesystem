@@ -64,8 +64,7 @@ find /cache/directory/* -mtime +5 -exec rm {} \;
 ```
 
 #### A note on serialization:
-Objects that are cached are converted to JSON then serialized to a file.  This initial conversion avoids cases where a basic Groovy object doesn't implement Serializable, but should still be writeable.  
-
+Objects that are cached are converted to JSON then serialized to a file.  This initial conversion avoids cases where a basic Groovy object doesn't implement Serializable, but should still be reasonably writeable.  
 
 
 
