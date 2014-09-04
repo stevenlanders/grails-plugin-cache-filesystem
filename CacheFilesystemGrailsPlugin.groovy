@@ -47,7 +47,8 @@ A filesystem implementation of the Cache plugin
 
     // Details of company behind the plugin (if there is one)
     def organization = [ name: "ThoughtWorks", url: "http://www.thoughtworks.com/" ]
-
+    def issueManagement = [system: 'GitHub', url: 'https://github.com/stevenlanders/grails-plugin-cache-filesystem/issues']
+    def scm = [url: 'https://github.com/stevenlanders/grails-plugin-cache-filesystem']
 
     def doWithSpring = {
 
