@@ -1,11 +1,18 @@
 grails-plugin-cache-filesystem
 ==============================
 
+### Description
+
 Filesystem implementation of the Grails cache plugin
 
 This is for very simple caching scenarios where the filesystem is a reasonable place to cache results.  To clear the cache, delete the desired directory.
 
 By default, cache files are created in Java's `-Djava.io.tmpdir` location  (where File.createTempFile creates its files)
+
+### Usage
+
+Include in your BuildConfig.groovy as follows:
+`compile ':cache-filesystem:0.2'`
 
 ### Example (optional) configurations:
 
