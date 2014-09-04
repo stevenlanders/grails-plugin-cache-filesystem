@@ -5,7 +5,7 @@ grails-plugin-cache-filesystem
 
 Filesystem implementation of the Grails cache plugin
 
-This is for very simple caching scenarios where the filesystem is a reasonable place to cache results.  To clear the cache, delete the desired directory or files.
+This is for very simple caching scenarios where the filesystem is a reasonable place to cache results.  To clear the cache, delete the desired directory or files.  Each object creates its own file (SHA256-encoded-key.json) in a directory specified in the configuration.
 
 By default, cache files are created in Java's `-Djava.io.tmpdir` location  (where File.createTempFile creates its files)
 
@@ -52,7 +52,7 @@ The name of the object is the SHA-256 encoded serialized key (or JSON if not Ser
 
 #### Space limitations
 
-Files will continue to be added to the filesystem as long as there are unique results to cache.  It will build indefinitely.  To recover space, one can simply delete files as desired.
+Files will continue to be added to the filesystem for each unique result.  The cache will grow indefinitely.  To recover space, one can simply delete files as desired.
 
 Because this is a filesystem, it is possible to clean the cache directories per your needs via cronjob, or other external process.  For instance, you may choose to clean the cache every day, or only files older than some desired TTL. We can extend this plugin to offer auto-purging, if the need is voiced or preferred.  
 
