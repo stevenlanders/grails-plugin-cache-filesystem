@@ -16,6 +16,11 @@ Include in your BuildConfig.groovy as follows:
 
 ### Example (optional) configurations:
 
+A cache config is actually not necessary unless you wish to specify a different directory than `-Djava-io-tmpdir`. 
+
+To dyanmically add a cache, just use the annotation `@Cachable("cachename")`.  
+
+Inside Config.groovy, use the following:
 ```groovy
 //basic config
 grails.cache.config = {
@@ -39,4 +44,3 @@ grails.cache.config = {
 }
 ```
 
-If desired, one can choose to not specify a cache config, and just use `@Cachable("cachename")`.  In this case, default temp directory is used.
