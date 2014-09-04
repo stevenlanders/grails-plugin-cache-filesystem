@@ -3,7 +3,7 @@ grails-plugin-cache-filesystem
 
 ### Description
 
-Filesystem implementation of the Grails cache plugin
+Filesystem implementation of the [Grails cache plugin](http://grails.org/plugin/cache)
 
 This is for very simple caching scenarios where the filesystem is a reasonable place to cache results.  To clear the cache, delete the desired directory or files.  Each object creates its own file (SHA256-encoded-key.json) in a directory specified in the configuration.
 
