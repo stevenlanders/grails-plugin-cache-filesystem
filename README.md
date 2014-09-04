@@ -18,7 +18,7 @@ Include in your BuildConfig.groovy as follows:
 
 A cache config is actually not necessary unless you wish to specify a different directory than `-Djava-io-tmpdir`. 
 
-To dyanmically add a cache, just use the annotation `@Cachable("cachename")`.  
+To dynamically add a cache, just use the annotation `@Cachable("cachename")`.  For full `@Cacheable` usage, please see the official cache plugin's [documentation](http://grails-plugins.github.io/grails-cache/).  
 
 Inside Config.groovy, use the following:
 ```groovy
