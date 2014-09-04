@@ -12,7 +12,7 @@ By default, cache files are created in Java's `-Djava.io.tmpdir` location  (wher
 ### Usage
 
 Include in your BuildConfig.groovy as follows:
-`compile ':cache-filesystem:0.2'`
+`compile ':cache-filesystem:0.4'`
 
 ### Example (optional) configurations:
 
