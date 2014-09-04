@@ -228,6 +228,21 @@ class FileSystemCacheSpec extends Specification {
             thrown IllegalStateException
     }
 
+    void "test multiple puts"(){
+        given:
+            FileSystemCache cache = new FileSystemCache(
+                    name: CACHE_NAME,
+                    directory: TEMP_DIR
+            )
+        when:
+            cache.put("entry", "myval")
+            cache.put("entry", "myval2")
+
+        then:
+            assert new File("${TEMP_DIR}/${CACHE_NAME}").listFiles().size() == 1
+            assert "myval2" == cache.get("entry").get()
+    }
+
     void "test clear cache without name illegal state"(){
         given:
         FileSystemCache cache = new FileSystemCache(
