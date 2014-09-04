@@ -9,6 +9,23 @@ This is for very simple caching scenarios where the filesystem is a reasonable p
 
 By default, cache files are created in Java's `-Djava.io.tmpdir` location  (where File.createTempFile creates its files)
 
+### Behavior Details
+
+#### Space limitations
+
+Because this is a filesystem, it is possible to clean the cache directories per your needs via cronjob, or other external process.  For instance, you may choose to clean the cache every day, or only files older than some desired TTL. We can extend this plugin to offer auto-purging, if the need is voiced.  
+
+There are some complexities to auto-purging which are elegantly solved by a cronjob:
+
+```bash
+#Delete files older than 5 days
+`find /path/to/files* -mtime +5 -exec rm {} \;`
+```
+
+#### A note on serialization:
+Objects that are cached are converted to JSON then serialized to a file.  This initial conversion avoids cases where a basic Groovy object doesn't implement Serializable, but should still be writeable.  
+
+
 ### Usage
 
 Include in your BuildConfig.groovy as follows:
