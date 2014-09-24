@@ -1,0 +1,7 @@
+*.log
+/target
+grails-cache-filesystem-*.zip
+grails-cache-filesystem-*.zip.sha1
+plugin.xml
+.settings
+/web-app/WEB-INF

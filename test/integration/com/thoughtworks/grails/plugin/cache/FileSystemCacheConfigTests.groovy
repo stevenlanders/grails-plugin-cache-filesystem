@@ -20,7 +20,7 @@ import grails.test.mixin.TestMixin
 import grails.test.mixin.integration.IntegrationTestMixin
 
 /**
- * Created by stevenlanders on 9/2/14.
+ * @author stevenlanders
  */
 @TestMixin(IntegrationTestMixin)
 class FileSystemCacheConfigTests{
@@ -42,7 +42,7 @@ class FileSystemCacheConfigTests{
 
         grailsCacheConfigLoader.reload grailsApplication.mainContext
 
-        def fileCacheManager = grailsCacheManager as FileSystemCacheManager
+        def fileCacheManager = grailsCacheManager
         assert "/tmp" == fileCacheManager.getDefaultDirectory()
     }
 
@@ -60,7 +60,7 @@ class FileSystemCacheConfigTests{
 
         grailsCacheConfigLoader.reload grailsApplication.mainContext
         assert grailsCacheManager.getCache("config1") instanceof FileSystemCache
-        FileSystemCache cache = grailsCacheManager.getCache("config1") as FileSystemCache
+        FileSystemCache cache = grailsCacheManager.getCache("config1")
         assert "config1" == cache.getName()
         assert "/my/test/directory" == cache.getDirectory()
     }
@@ -80,7 +80,7 @@ class FileSystemCacheConfigTests{
 
 
         assert grailsCacheManager.getCache("defaultDirectoryConfig") instanceof FileSystemCache
-        FileSystemCache cache = grailsCacheManager.getCache("defaultDirectoryConfig") as FileSystemCache
+        FileSystemCache cache = grailsCacheManager.getCache("defaultDirectoryConfig")
         assert "defaultDirectoryConfig" == cache.getName()
         assert "/tmp" == cache.getDirectory()
     }
@@ -99,13 +99,11 @@ class FileSystemCacheConfigTests{
         assert !grailsCacheManager.cacheExists("config1")
         assert grailsCacheManager.cacheExists("newconfig")
         assert grailsCacheManager.getCache("newconfig") instanceof FileSystemCache
-        FileSystemCache cache = grailsCacheManager.getCache("newconfig") as FileSystemCache
+        FileSystemCache cache = grailsCacheManager.getCache("newconfig")
         assert "newconfig" == cache.getName()
         assert System.getProperty("java.io.tmpdir") == cache.getDirectory()
 
-        def fileCacheManager = grailsCacheManager as FileSystemCacheManager
+        def fileCacheManager = grailsCacheManager
         assert System.getProperty("java.io.tmpdir") == fileCacheManager.getDefaultDirectory()
-
     }
-
 }

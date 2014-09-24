@@ -19,23 +19,25 @@ package com.thoughtworks.grails.plugin.cache
 import grails.plugin.cache.GrailsValueWrapper
 import groovy.json.JsonOutput
 import groovy.json.JsonSlurper
-import org.apache.commons.lang.SerializationUtils
-import org.springframework.cache.Cache
 
 import java.security.MessageDigest
 
+import org.apache.commons.lang.SerializationUtils
+import org.springframework.cache.Cache
+import org.springframework.util.Assert
+
 /**
- * Created by stevenlanders on 9/2/14.
+ * @author stevenlanders
  */
-class FileSystemCache implements Cache{
+class FileSystemCache implements Cache {
 
-    String directory;
-    String name;
+    String directory
+    String name
 
-    void writeObject(Object key, Object o){
+    void writeObject(key, o) {
         checkStatus()
         try {
-            new File("${directory}/${name}/").mkdirs()
+            new File(directory, name).mkdirs()
             def file = getFileByKey(key)
             file.write(JsonOutput.toJson(o))
         }catch(e){
@@ -43,7 +45,7 @@ class FileSystemCache implements Cache{
         }
     }
 
-    Object readObject(Object key){
+    Object readObject(key) {
         checkStatus()
         try{
             def file = getFileByKey(key)
@@ -56,75 +58,59 @@ class FileSystemCache implements Cache{
         return null
     }
 
-    File getFileByKey(Object key){
+    File getFileByKey(key) {
         def filename = toFileName(key)
         def file = new File("${directory}/${name}/${filename}.json")
-        return file;
+        return file
     }
 
-    static String toFileName(Object key){
-        def md5Digest = MessageDigest.getInstance("SHA-256");
-        md5Digest.reset();
+    static String toFileName(key) {
+        def md5Digest = MessageDigest.getInstance("SHA-256")
+        md5Digest.reset()
 
         def serialKey = key
         if(!(serialKey instanceof Serializable)){
             serialKey = JsonOutput.toJson(key)
         }
 
-        byte[] b = SerializationUtils.serialize((Serializable)serialKey)
-        md5Digest.update(b);
-        def digest = md5Digest.digest();
+        byte[] b = SerializationUtils.serialize(serialKey)
+        md5Digest.update(b)
+        def digest = md5Digest.digest()
         return new BigInteger(1,digest).toString(16)
     }
 
-    @Override
-    String getName() {
-        this.name
-    }
-
-    @Override
     Object getNativeCache() {
         checkStatus()
-        return new File("${directory}/${name}")
+        return new File(directory, name)
     }
 
-    @Override
-    Cache.ValueWrapper get(Object key) {
+    Cache.ValueWrapper get(key) {
         Object o = readObject(key)
         return (o == null) ? null : new GrailsValueWrapper(o, null)
     }
 
-    @Override
-    def <T> T get(Object key, Class<T> tClass) {
-        return (T)readObject(key)
+    def <T> T get(key, Class<T> tClass) {
+        return readObject(key)
     }
 
-    @Override
-    void put(Object key, Object o) {
+    void put(key, o) {
         writeObject(key, o)
     }
 
-    @Override
-    void evict(Object key) {
+    void evict(key) {
         def file = getFileByKey(key)
         if(file.exists()){
             file.delete()
         }
     }
 
-    @Override
     void clear() {
         checkStatus()
-        new File("${directory}/${name}").deleteDir()
+        new File(directory, name).deleteDir()
     }
 
-    private def checkStatus(){
-        if(name == null){
-            throw new IllegalStateException("FileSystemCaches must have name specified (name=${name})")
-        }
-        if(directory == null){
-            throw new IllegalStateException("FileSystemCache ${name} must have directory specified (directory=${directory})")
-        }
+    private void checkStatus() {
+        Assert.state(name != null, "FileSystemCaches must have name specified (name=${name})")
+        Assert.state(directory != null, "FileSystemCache ${name} must have directory specified (directory=${directory})")
     }
-
 }
