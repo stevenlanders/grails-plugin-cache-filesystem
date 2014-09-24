@@ -20,26 +20,24 @@ import grails.plugin.cache.GrailsCacheManager
 import org.springframework.cache.Cache
 
 /**
- * Created by stevenlanders on 9/2/14.
+ * @author stevenlanders
  */
 class FileSystemCacheManager implements GrailsCacheManager {
 
     def cacheMap = [:]
-    def defaultDirectory;
+    String defaultDirectory
 
-    void addCache(def name, def directory){
-        if(directory == null){
+    void addCache(String name, String directory) {
+        if (directory == null) {
             directory = defaultDirectory
         }
         cacheMap.put(name, new FileSystemCache(name: name, directory: directory))
     }
 
-    @Override
     boolean cacheExists(String name) {
         return name == null ? false : cacheMap.containsKey(name)
     }
 
-    @Override
     boolean destroyCache(String name) {
         if(cacheExists(name)){
             getCache(name).clear()
@@ -47,7 +45,6 @@ class FileSystemCacheManager implements GrailsCacheManager {
         cacheMap.remove(name)
     }
 
-    @Override
     Cache getCache(String name) {
         if(!cacheExists(name)){
             cacheMap.put(name, new FileSystemCache(name: name, directory: defaultDirectory))
@@ -55,7 +52,6 @@ class FileSystemCacheManager implements GrailsCacheManager {
         return (Cache)cacheMap.get(name)
     }
 
-    @Override
     Collection<String> getCacheNames() {
         return cacheMap.keySet()
     }

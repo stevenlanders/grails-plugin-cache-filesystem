@@ -17,10 +17,11 @@
 package com.thoughtworks.grails.plugin.cache
 
 import grails.plugin.cache.ConfigLoader
+
 import org.springframework.context.ApplicationContext
 
 /**
- * Created by stevenlanders on 9/2/14.
+ * @author stevenlanders
  */
 class FileSystemCacheConfigLoader extends ConfigLoader {
 
@@ -34,7 +35,7 @@ class FileSystemCacheConfigLoader extends ConfigLoader {
             }
         }
 
-        FileSystemCacheManager cacheManager = ctx.grailsCacheManager as FileSystemCacheManager
+        FileSystemCacheManager cacheManager = ctx.grailsCacheManager
 
         for (String name in ([] + cacheManager.cacheNames)) {
             cacheManager.destroyCache name
@@ -43,16 +44,16 @@ class FileSystemCacheConfigLoader extends ConfigLoader {
         def defaults = builder.getDefaults()
 
         if(defaults.containsKey("directory")){
-            cacheManager.setDefaultDirectory(defaults.get("directory"))
+            cacheManager.setDefaultDirectory(defaults.directory)
         }
 
         builder.getCaches().each{cacheConfig->
-            defaults.each{entry->
-                if(!cacheConfig.containsKey(entry.getKey())){
-                    cacheConfig.put(entry.getKey(), entry.getValue())
+            defaults.each { key, value ->
+                if(!cacheConfig.containsKey(key)){
+                    cacheConfig.put(key, value)
                 }
             }
-            cacheManager.addCache(cacheConfig["name"], cacheConfig["directory"])
+            cacheManager.addCache(cacheConfig.name, cacheConfig.directory)
         }
 
     }

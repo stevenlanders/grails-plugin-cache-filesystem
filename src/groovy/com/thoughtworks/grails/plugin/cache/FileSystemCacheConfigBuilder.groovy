@@ -19,7 +19,7 @@ package com.thoughtworks.grails.plugin.cache
 import grails.plugin.cache.ConfigBuilder
 
 /**
- * Created by stevenlanders on 9/3/14.
+ * @author stevenlanders
  */
 class FileSystemCacheConfigBuilder extends ConfigBuilder {
 
@@ -31,7 +31,7 @@ class FileSystemCacheConfigBuilder extends ConfigBuilder {
             'directory','name','env'
     ]
 
-    public def getCaches(){
+    def getCaches(){
         return _caches
     }
 
@@ -105,6 +105,4 @@ class FileSystemCacheConfigBuilder extends ConfigBuilder {
         _unrecognizedElementDepth++
         _log.warn "Cannot create node with name '$name' and value '$value' for parent '$level'"
     }
-
-
 }
